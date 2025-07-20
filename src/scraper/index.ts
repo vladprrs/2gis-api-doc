@@ -15,7 +15,7 @@ export class SimpleScraper implements Scraper {
   }
   
   async fetchOpenAPI(apiName: string): Promise<string> {
-    const url = `https://docs.2gis.com/en/api/${apiName}/openapi.json`;
+    const url = `https://docs.2gis.com/ru/api/search/${apiName}/openapi.json`;
     return await this.fetchPage(url);
   }
 } 
