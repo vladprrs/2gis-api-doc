@@ -56,8 +56,8 @@ export class ParserApp implements IParserApp {
       try {
         console.log(`📥 Processing ${api.name} API...`);
         
-        // Fetch documentation page
-        const docUrl = `${this.config.baseUrl}/ru/api/${api.path}`;
+        // Fetch documentation page (English version)
+        const docUrl = `${this.config.baseUrl}/en/api/${api.path}`;
         const html = await this.scraper.fetchPage(docUrl);
         
         // Convert to Markdown
@@ -95,12 +95,12 @@ export class ParserApp implements IParserApp {
     for (const [category, apis] of Object.entries(apisByCategory)) {
       const categoryTitle = category === 'search' ? 'Search APIs' : 'Navigation APIs';
       const categoryDescription = category === 'search' 
-        ? 'APIs для поиска организаций, геокодирования и работы с данными'
-        : 'APIs для навигации, маршрутизации и логистики';
+        ? 'APIs for searching organizations, geocoding and data management'
+        : 'APIs for navigation, routing and logistics';
       
       let indexContent = `# ${categoryTitle}\n\n`;
       indexContent += `${categoryDescription}\n\n`;
-      indexContent += `## Доступные API\n\n`;
+      indexContent += `## Available APIs\n\n`;
       
       for (const api of apis) {
         const apiTitle = this.getApiTitle(api.name);
@@ -114,14 +114,14 @@ export class ParserApp implements IParserApp {
 
   private async createMainReadme(apisByCategory: Record<string, Array<{ name: string; path: string; category: string }>>): Promise<void> {
     let readmeContent = `# 2GIS API Documentation\n\n`;
-    readmeContent += `Документация всех доступных API 2GIS, извлеченная из официальных источников.\n\n`;
-    readmeContent += `## Категории API\n\n`;
+    readmeContent += `Documentation for all available 2GIS APIs, extracted from official sources.\n\n`;
+    readmeContent += `## API Categories\n\n`;
     
     for (const [category, apis] of Object.entries(apisByCategory)) {
       const categoryTitle = category === 'search' ? 'Search APIs' : 'Navigation APIs';
       const categoryDescription = category === 'search' 
-        ? 'APIs для поиска организаций, геокодирования и работы с данными'
-        : 'APIs для навигации, маршрутизации и логистики';
+        ? 'APIs for searching organizations, geocoding and data management'
+        : 'APIs for navigation, routing and logistics';
       
       readmeContent += `### [${categoryTitle}](./${category}/README.md)\n\n`;
       readmeContent += `${categoryDescription}\n\n`;
@@ -133,11 +133,11 @@ export class ParserApp implements IParserApp {
       readmeContent += '\n';
     }
     
-    readmeContent += `## Обновление документации\n\n`;
-    readmeContent += `Документация автоматически обновляется из официальных источников 2GIS.\n`;
-    readmeContent += `Последнее обновление: ${new Date().toLocaleString('ru-RU')}\n\n`;
-    readmeContent += `## Источник\n\n`;
-    readmeContent += `Официальная документация: https://docs.2gis.com/\n`;
+    readmeContent += `## Documentation Updates\n\n`;
+    readmeContent += `Documentation is automatically updated from official 2GIS sources.\n`;
+    readmeContent += `Last updated: ${new Date().toLocaleString('en-US')}\n\n`;
+    readmeContent += `## Source\n\n`;
+    readmeContent += `Official documentation: https://docs.2gis.com/\n`;
     
     const readmePath = path.join(this.config.outputDir, 'README.md');
     await this.storage.saveFile(readmeContent, readmePath);
@@ -167,23 +167,23 @@ export class ParserApp implements IParserApp {
 
   private getApiDescription(apiName: string): string {
     const descriptions: Record<string, string> = {
-      'places': 'Поиск организаций, зданий и мест',
-      'geocoder': 'Прямое и обратное геокодирование',
-      'suggest': 'Автодополнение для поиска',
-      'categories': 'Работа с категориями организаций',
-      'regions': 'Информация о регионах и административных единицах',
-      'markers': 'Работа с маркерами на карте',
-      'routing': 'Построение маршрутов',
-      'public-transport': 'Маршруты общественного транспорта',
-      'directions': 'Построение направлений (устаревший)',
-      'pairs': 'Маршруты между парами точек (устаревший)',
-      'truck-directions': 'Маршруты для грузового транспорта (устаревший)',
-      'distance-matrix': 'Матрица расстояний между точками',
-      'tsp': 'Решение задачи коммивояжера',
-      'isochrone': 'Изохронные области',
-      'map-matching': 'Привязка треков к дорожной сети',
-      'radar': 'Поиск объектов в радиусе'
+      'places': 'Search for organizations, buildings and places',
+      'geocoder': 'Forward and reverse geocoding',
+      'suggest': 'Autocomplete for search',
+      'categories': 'Work with organization categories',
+      'regions': 'Information about regions and administrative units',
+      'markers': 'Work with map markers',
+      'routing': 'Route building',
+      'public-transport': 'Public transport routes',
+      'directions': 'Direction building (deprecated)',
+      'pairs': 'Routes between pairs of points (deprecated)',
+      'truck-directions': 'Truck transport routes (deprecated)',
+      'distance-matrix': 'Distance matrix between points',
+      'tsp': 'Traveling salesman problem solution',
+      'isochrone': 'Isochrone areas',
+      'map-matching': 'Track matching to road network',
+      'radar': 'Search for objects within radius'
     };
-    return descriptions[apiName] || 'Описание недоступно';
+    return descriptions[apiName] || 'Description not available';
   }
 } 

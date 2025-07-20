@@ -15,11 +15,11 @@ export class SimpleScraper implements Scraper {
   }
   
   async fetchOpenAPI(apiName: string): Promise<string> {
-    // Try different URL patterns for OpenAPI specs
+    // Try different URL patterns for OpenAPI specs (English version)
     const urlPatterns = [
-      `https://docs.2gis.com/ru/api/search/${apiName}/openapi.json`,
-      `https://docs.2gis.com/ru/api/navigation/${apiName}/openapi.json`,
-      `https://docs.2gis.com/ru/api/${apiName}/openapi.json`
+      `https://docs.2gis.com/en/api/search/${apiName}/openapi.json`,
+      `https://docs.2gis.com/en/api/navigation/${apiName}/openapi.json`,
+      `https://docs.2gis.com/en/api/${apiName}/openapi.json`
     ];
     
     for (const url of urlPatterns) {
